@@ -131,6 +131,11 @@ def refresh_list(indices=None):
                 index + 1,
                 prompt["category"],
                 prompt["title"],
+                (
+                    prompt["content"][:55] + "..."
+                    if len(prompt["content"]) > 55
+                    else prompt["content"]
+                ),
                 favorite,
                 views
             )
@@ -360,8 +365,8 @@ def toggle_favorite(event):
 
     column = tree.identify_column(event.x)
 
-    # 4번째 열 = 즐겨찾기
-    if column != "#4":
+    # 5번째 열 = 즐겨찾기
+    if column != "#5":
         return
 
     index = int(selected)
@@ -903,11 +908,11 @@ root.title(
 )
 
 root.geometry(
-    "1100x720"
+    "1250x720"
 )
 
 root.minsize(
-    950,
+    1100,
     650
 )
 
@@ -1231,6 +1236,7 @@ columns = (
     "번호",
     "카테고리",
     "제목",
+    "내용",
     "즐겨찾기",
     "조회수"
 )
@@ -1260,6 +1266,11 @@ tree.heading(
 )
 
 tree.heading(
+    "내용",
+    text="내용 미리보기"
+)
+
+tree.heading(
     "즐겨찾기",
     text="즐겨찾기"
 )
@@ -1286,7 +1297,13 @@ tree.column(
 
 tree.column(
     "제목",
-    width=560,
+    width=260,
+    anchor="w"
+)
+
+tree.column(
+    "내용",
+    width=430,
     anchor="w"
 )
 
