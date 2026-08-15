@@ -659,43 +659,7 @@ README 작성
 
 ---
 
-## 15. 과제 제출 시 캡처 항목
-
-다음 화면을 캡처하여 제출 자료로 활용할 수 있습니다.
-
-### 개발 환경
-
-```bash
-python --version
-git --version
-git config --global user.name
-git config --global user.email
-```
-
-### 프로그램 실행
-
-- 메인 메뉴
-- 프롬프트 추가
-- 프롬프트 목록
-- 카테고리별 조회
-- 프롬프트 검색
-- 프롬프트 상세 보기
-- 즐겨찾기 관리
-- 즐겨찾기 목록
-- 조회수 TOP 목록
-- Markdown 내보내기
-
-### Git 기록
-
-```bash
-git log --oneline --graph --all
-```
-
-브랜치가 생성되고 main 브랜치로 병합된 기록이 보이도록 캡처합니다.
-
----
-
-## 16. 프로젝트 특징
+## 15. 프로젝트 특징
 
 이 프로젝트는 생성형 AI 프롬프트를 체계적으로 관리하기 위한 Python 콘솔 프로그램입니다.
 
