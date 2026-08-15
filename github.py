@@ -198,38 +198,39 @@ category_combo.bind(
     "<<ComboboxSelected>>",
     filter_category
 )
+    
+def toggle_favorite(event):
+    selected = tree.identify_row(event.y)
 
-def toggle_favorites():
-    global showing_favorites
+    if not selected:
+        return
 
-    if showing_favorites:
-        # 현재 즐겨찾기 목록이면 → 전체 목록으로
-        showing_favorites = False
-        favorite_button.config(text="⭐ 즐겨찾기 목록")
+    column = tree.identify_column(event.x)
+
+    # 즐겨찾기 열을 클릭했을 때만 실행
+    if column == "#4":
+        index = int(selected)
+
+        # 즐겨찾기 상태 변경
+        prompts[index]["favorite"] = not prompts[index]["favorite"]
+
+        # JSON 저장을 사용 중이면 저장
+        save_prompts()
+
+        # 변경된 상태에 따라 메시지 출력
+        if prompts[index]["favorite"]:
+            messagebox.showinfo(
+                "즐겨찾기",
+                f"'{prompts[index]['title']}'\n즐겨찾기에 추가되었습니다."
+            )
+        else:
+            messagebox.showinfo(
+                "즐겨찾기",
+                f"'{prompts[index]['title']}'\n즐겨찾기가 해제되었습니다."
+            )
+
+        # 목록 새로고침
         refresh_list()
-
-    else:
-        # 현재 전체 목록이면 → 즐겨찾기만
-        showing_favorites = True
-        favorite_button.config(text="⭐ 즐겨찾기 목록")
-
-        result = [
-            prompt
-            for prompt in prompts
-            if prompt["favorite"]
-        ]
-
-        refresh_list(result)
-
-favorite_button = tk.Button(
-    option_frame,
-    text="⭐ 즐겨찾기 목록",
-    command=toggle_favorites
-)
-
-favorite_button.pack(side="left")
-
-favorite_button.pack(side="left")
 
 
 # 게시판 목록
