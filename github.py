@@ -4,6 +4,7 @@ import json
 import os
 
 DATA_FILE = "prompts.json"
+showing_favorites = False
 
 
 def load_prompts():
@@ -198,11 +199,35 @@ category_combo.bind(
     filter_category
 )
 
+def toggle_favorites():
+    global showing_favorites
+
+    if showing_favorites:
+        # 현재 즐겨찾기 목록이면 → 전체 목록으로
+        showing_favorites = False
+        favorite_button.config(text="⭐ 즐겨찾기 목록")
+        refresh_list()
+
+    else:
+        # 현재 전체 목록이면 → 즐겨찾기만
+        showing_favorites = True
+        favorite_button.config(text="⭐ 즐겨찾기 목록")
+
+        result = [
+            prompt
+            for prompt in prompts
+            if prompt["favorite"]
+        ]
+
+        refresh_list(result)
+
 favorite_button = tk.Button(
     option_frame,
     text="⭐ 즐겨찾기 목록",
-    command=show_favorites
+    command=toggle_favorites
 )
+
+favorite_button.pack(side="left")
 
 favorite_button.pack(side="left")
 
